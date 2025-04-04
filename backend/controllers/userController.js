@@ -214,9 +214,9 @@ export const cancelAppointment = async (req, res) => {
 
 // API for Payment Using Razor Pay (first-time using)
 
-const razorInstance = new razorpay({
-  key_id: "",
-  key_secret: "",
-});
+// const razorInstance = new razorpay({
+//   key_id: "",
+//   key_secret: "",
+// });
 
-export const paymentRazorPay = async (req, res) => {};
+// export const paymentRazorPay = async (req, res) => {};
