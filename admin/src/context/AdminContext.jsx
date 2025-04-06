@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 export const AdminContext = createContext();
 
 const AdminContextProvider = (props) => {
-  const [adminToken, setAdminToken] = useState("");
+  const [adminToken, setAdminToken] = useState(
+    localStorage.getItem("AdminToken") ? localStorage.getItem("AdminToken") : ""
+  );
   const [doctors, setDoctors] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [dashData, setDashData] = useState(false);
@@ -137,7 +139,6 @@ const AdminContextProvider = (props) => {
 
       if (data.success) {
         setDashData(data.dashData);
-        console.log(data.dashData);
       } else {
         toast.error(data.message);
       }

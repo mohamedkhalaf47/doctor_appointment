@@ -1,21 +1,27 @@
 import jwt from "jsonwebtoken";
 
-export const authUser = async (req, res, next) => {
+export const authDoctor = async (req, res, next) => {
   try {
-    const userToken =
+    const doctorToken =
       req.headers["Authorization"] || req.headers["authorization"];
 
-    const token = userToken.split(" ")[1];
+    const token = doctorToken.split(" ")[1];
 
     if (!token) {
       return res
         .status(400)
-        .json({ success: false, message: "Not Authorized Login Again" });
+        .json({ success: false, message: "Token Not Found" });
     }
 
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    req.body.userId = tokenDecode.id;
+    req.body.docId = tokenDecode.id
+
+    if (!tokenDecode) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Token Isn't Right" });
+    }
 
     next();
   } catch (error) {
