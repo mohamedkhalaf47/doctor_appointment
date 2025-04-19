@@ -148,6 +148,30 @@ const AdminContextProvider = (props) => {
     }
   };
 
+  const deleteDoctorAndAppointments = async (docId) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/admin/delete-doctor`,
+        { docId },
+        {
+          headers: {
+            Authorization: `Bearer ${adminToken}`,
+          },
+        }
+      );
+      console.log(data);
+      if (data.success) {
+        toast.success(data.message);
+        getAllDoctors();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   const value = {
     adminToken,
     setAdminToken,
@@ -162,6 +186,7 @@ const AdminContextProvider = (props) => {
     getDashData,
     dashData,
     setDashData,
+    deleteDoctorAndAppointments,
   };
 
   return (

@@ -65,6 +65,8 @@ const AllAppointments = () => {
             </p>
             {appointment.cancelled ? (
               <p className="text-red-700 text-xs font-medium">Cancelled</p>
+            ) : appointment.isCompleted ? (
+              <p className="text-green-700 text-xs font-medium">Completed</p>
             ) : (
               <img
                 onClick={() => cancelAppointment(appointment._id)}

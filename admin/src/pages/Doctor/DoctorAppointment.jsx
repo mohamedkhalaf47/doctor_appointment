@@ -4,8 +4,13 @@ import { AppContext } from "../../context/AppContext";
 import { assets } from "../../assets_admin/assets";
 
 const DoctorAppointment = () => {
-  const { doctorToken, appointments, setAppointments, getAppointments } =
-    useContext(DoctorContext);
+  const {
+    doctorToken,
+    appointments,
+    getAppointments,
+    appointmentCompleted,
+    appointmentCancellation,
+  } = useContext(DoctorContext);
 
   const { calculateAge, slotDateFormat, currency } = useContext(AppContext);
 
@@ -28,7 +33,7 @@ const DoctorAppointment = () => {
           <p>Fees</p>
           <p>Actions</p>
         </div>
-        {appointments.map((appointment, index) => (
+        {appointments.reverse().map((appointment, index) => (
           <div
             className="flex flex-wrap justify-between max-sm:gap-5 max-sm:text-base sm:grid grid-cols-[0.5fr_2fr_1fr_1fr_3fr_1fr_1fr] gap-1 items-center text-gray-500 py-3 px-6 border-b transition-all cursor-pointer hover:bg-gray-100"
             key={index}
@@ -57,18 +62,27 @@ const DoctorAppointment = () => {
               {currency}
               {appointment.amount}
             </p>
-            <div className="flex">
-              <img
+            {
+              appointment.cancelled ? (
+                <p className="text-red-500">Cancelled</p>
+              ) : appointment.isCompleted ? (
+                <p className="text-green-500">Completed</p>
+              ) : (
+                <div className="flex">
+                  <img
                 className="w-10 cursor-pointer"
                 src={assets.cancel_icon}
                 alt="cancel icon"
+                onClick={() => appointmentCancellation(appointment._id)}
               />
               <img
                 className="w-10 cursor-pointer"
                 src={assets.tick_icon}
                 alt="check mark icon"
-              />
-            </div>
+                onClick={() => appointmentCompleted(appointment._id)}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

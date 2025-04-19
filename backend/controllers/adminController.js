@@ -180,3 +180,15 @@ export const dashboardData = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+export const deleteDoctorAndAppointments = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    await doctorModel.findByIdAndDelete(docId);
+    await appointmentModel.deleteMany({ docId });
+    res.json({ success: true, message: "Doctor and Appointments Deleted" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};

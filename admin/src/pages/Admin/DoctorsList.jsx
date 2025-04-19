@@ -2,8 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { AdminContext } from "../../context/AdminContext";
 
 const DoctorsList = () => {
-  const { adminToken, getAllDoctors, doctors, changeAvailability } =
-    useContext(AdminContext);
+  const {
+    adminToken,
+    getAllDoctors,
+    doctors,
+    changeAvailability,
+    deleteDoctorAndAppointments,
+  } = useContext(AdminContext);
 
   useEffect(() => {
     if (adminToken) {
@@ -37,6 +42,14 @@ const DoctorsList = () => {
                   checked={doctor.available}
                 />
                 <p>Available</p>
+              </div>
+              <div className="mt-2">
+                <button
+                  onClick={() => deleteDoctorAndAppointments(doctor._id)}
+                  className="border border-red-600 rounded-full px-2 py-0.5 text-sm cursor-pointer hover:bg-red-600 hover:text-white transition-all duration-500"
+                >
+                  Delete Doctor
+                </button>
               </div>
             </div>
           </div>
